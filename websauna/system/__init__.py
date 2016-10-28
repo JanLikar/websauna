@@ -577,15 +577,6 @@ class Initializer:
         self.config.scan(websauna.system.user.adminviews)
 
     @event_source
-    def configure_notebook(self):
-        """Setup pyramid_notebook integration."""
-        import websauna.system.notebook.views
-        self.config.add_route('admin_shell', '/notebook/admin-shell')
-        self.config.add_route('shutdown_notebook', '/notebook/shutdown')
-        self.config.add_route('notebook_proxy', '/notebook/*remainder')
-        self.config.scan(websauna.system.notebook.views)
-
-    @event_source
     def configure_tasks(self):
         """Scan all Python modules with asynchoronous and periodic tasks to be imported."""
 
@@ -631,6 +622,7 @@ class Initializer:
 
         By default do nothing.
         """
+        self.config.include('websauna.system.notebook') # TODO: Remove
 
     def run(self):
         """Run the initialization and prepare Pyramid subsystems.
@@ -692,9 +684,6 @@ class Initializer:
         self.configure_user_models()
         self.configure_password()
         self.configure_federated_login()
-
-        # Configure web shell
-        self.configure_notebook()
 
         # Database and models
         self.configure_instrumented_models()

@@ -25,10 +25,6 @@ class NotebookInitializer():
     def run(self):
         # Nothing here, advisors get called later
         bind_events(self.config.registry.initializer, self)
-        self.configure_notebook()
-        admin = Admin().construct()
-        entry = menu.RouteEntry("admin-notebook", label="Shellsss", icon="fa-terminal", route_name="admin_shell", condition=lambda request:request.has_permission('shell'))
-        admin.get_root_menu().add_entry(entry)
 
     @event_source
     def configure_notebook(self):
